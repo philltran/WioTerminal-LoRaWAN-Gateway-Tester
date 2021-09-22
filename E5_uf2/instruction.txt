@@ -1,0 +1,1 @@
+The left side button go downside press twice on the Wio terminal, it will display a driver, then drop the uf2 file to this driver, then the program will be executed immediately

@@ -30,6 +30,7 @@ The hardware used in this project is more affordable than most on the market, wi
 
 
 
+
 ## Usage
 
 
@@ -42,12 +43,15 @@ requite library:
 - [**Seeed_Arduino_SFUD**](https://github.com/Seeed-Studio/Seeed_Arduino_SFUD)
 - [**TinyGPS**](https://github.com/mikalhart/TinyGPSPlus)
 - [**LovyanGFX**](https://github.com/lovyan03/LovyanGFX)
+- [**FlashStorage_SAMD**](https://github.com/khoih-prog/FlashStorage_SAMD/tree/v1.1.0)
 
 ### Note
 
-When you upload the code, please selecte slave mode.
+When you upload the code, please select slave mode.
     <div align=center><img width = 400 src="https://files.seeedstudio.com/wiki/LoRa_WioTerminal/ROLA.png"/></div>
 
+
+There is the second way to upload the program which uploads the UF2 file, It will be faster to upload without compile. (The guide in the file)
 ### TheThingsNetwork Console Configuration Setup
 
 In this project, I test the LoRa tester on [**TheThingsNetwork**](https://www.thethingsnetwork.org) platform, the instuction as below:
