@@ -3,8 +3,11 @@
 #include "testeur.h"
 #include "config.h"
 #include "gps.h"
+#include "SoftwareSerial2.h"
 
 #define LORA_DEFAULT_TIMEOUT (1000)
+
+SoftwareSerial1 softSerial2(40,41);
 
 SqQueue SqQueueRssi;
 SqQueue SqQueueSnr;
@@ -118,7 +121,7 @@ E5_Module_Data_t E5_Module_Data =
     16,
     SF12,
     EU868,
-    8,
+    1,
     2,
     3,
     false,
@@ -443,6 +446,12 @@ bool Module_Is_Busy(void)
     return true;
 }
 
+void LoraSerialInit()
+{
+  softSerial2.begin(9600);
+  softSerial2.listen();
+}
+
 int E5_Module_AT_Cmd(e_module_AT_Cmd AT_Cmd)
 {
   if(Lora_is_busy == true)
@@ -472,7 +481,9 @@ int E5_Module_AT_Cmd(e_module_AT_Cmd AT_Cmd)
       }
   }
   strcat(cmd,"\r\n");
-  Serial1.printf(cmd);
+  GpsstopListening();
+  softSerial2.printf(cmd);
+  GpsListening();
 	return 1;
 }
 
@@ -493,19 +504,20 @@ static int check_message_response()
       }
       Lora_is_busy = false;
       init_flag = false; 
-      while (Serial1.available() > 0)
+      while(softSerial2.available() > 0)
       {
-        ch = Serial1.read();
+        ch = softSerial2.read();
         recv_buf[index++] = ch;
         delay(2);
       }
     
-      if (strstr(recv_buf, E5_Module_Cmd[module_AT_Cmd].p_ack) != NULL)
+      if (strstr(recv_buf, &E5_Module_Cmd[module_AT_Cmd].p_ack[1]) != NULL) //The first byte may be wrong
       {
 		  if((E5_Module_Cmd[module_AT_Cmd].Get_E5_Module_Para != NULL))
 		  {
 			  E5_Module_Cmd[module_AT_Cmd].Get_E5_Module_Para();	
 		  }
+          GpsListening();
           return MODULE_ACK_SUCCESS;
       }
       
@@ -514,11 +526,13 @@ static int check_message_response()
 		   if((E5_Module_Cmd[module_AT_Cmd].Get_E5_Module_Para != NULL))
 		   {
 		 	  E5_Module_Cmd[module_AT_Cmd].Get_E5_Module_Para();	
-		   }      
+		   }   
+           GpsListening();  
           return MODULE_TIMEOUT;
       }  
       Lora_is_busy = true;
-      init_flag = true;  
+      init_flag = true; 
+      GpsListening(); 
       return MODULE_RECEIVING;
   }
   return MODULE_IDLE;

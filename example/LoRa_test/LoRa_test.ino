@@ -10,10 +10,9 @@
 void setup(void) {
   Serial.begin(115200);
 
-  init_softSerial();
+  GpsSerialInit();
     
-  Serial1.begin(9600);
-  while (!Serial1);
+  LoraSerialInit();
   InitQueue(&SqQueueRssi);
   InitQueue(&SqQueueSnr);
   InitQueue(&SqQueueAtCmd);

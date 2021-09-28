@@ -139,4 +139,5 @@ void Init_E5_Mode(void);
 int E5_Module_SendCmsgHexData(void);
 bool Module_Is_Busy(void);
 void E5_Module_Polling();
+void LoraSerialInit();
 #endif
