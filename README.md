@@ -47,10 +47,6 @@ requite library:
 
 ### Note
 
-When you upload the code, please select slave mode.
-    <div align=center><img width = 400 src="https://files.seeedstudio.com/wiki/LoRa_WioTerminal/ROLA.png"/></div>
-
-
 There is the second way to upload the program which uploads the UF2 file, It will be faster to upload without compile. (The guide in the file)
 ### TheThingsNetwork Console Configuration Setup
 
